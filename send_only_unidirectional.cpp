@@ -21,6 +21,7 @@
 #define RTP_PAYLOAD_TYPE "96"
 #define SOUP_HTTP_PORT 57778
 #define STUN_SERVER "stun.l.google.com:19302"
+//#define STUN_SERVER "127.0.0.1:3478"
 
 typedef struct _ReceiverEntry ReceiverEntry;
 
@@ -179,23 +180,37 @@ create_receiver_entry (SoupWebsocketConnection * connection)
                       G_CALLBACK (soup_websocket_message_cb), (gpointer) receiver_entry);
 
     error = NULL;
-    receiver_entry->pipeline =
-            gst_parse_launch ("webrtcbin name=webrtcbin stun-server=stun://"
-                              STUN_SERVER " "
-                              //"v4l2src "
-                              "videotestsrc "
-                              //"! videorate "
-                              //"! video/x-raw,width=640,height=360,framerate=15/1 "
-                              //"! videoconvert "
-                              //"! queue max-size-buffers=1 "
-                              "! queue "
-                              "! x264enc bitrate=600 speed-preset=ultrafast tune=zerolatency key-int-max=15 "
-                              "! video/x-h264,profile=constrained-baseline "
-                              "! queue max-size-time=100000000 "
-                              "! h264parse "
-                              "! rtph264pay config-interval=-1 name=payloader "
-                              "! application/x-rtp,media=video,encoding-name=H264,payload=" RTP_PAYLOAD_TYPE " "
-                              "! webrtcbin. ", &error);
+    /**/receiver_entry->pipeline =
+                gst_parse_launch ("webrtcbin name=webrtcbin  stun-server=stun://" STUN_SERVER " "
+                                  "v4l2src device=/dev/video0 "
+                                  //"! videorate "
+                                  "! video/x-raw,width=640,height=360,framerate=15/1 "
+                                  "! videoconvert "
+                                  "! queue max-size-buffers=1 "
+                                  "! omxh264enc "
+                                  //"! video/x-h264,profile=constrained-baseline "
+                                  "! queue max-size-time=100000000 "
+                                  //"! h264parse "
+                                  "! rtph264pay config-interval=10 name=payloader pt=96 "
+                                  "! capssetter caps=\"application/x-rtp,profile-level-id=(string)42c01f,media=(string)video,encoding-name=(string)H264,payload=(int)96\" "
+                                  "! webrtcbin. ", &error);
+    //*/
+    /*receiver_entry->pipeline =
+                gst_parse_launch ("webrtcbin name=webrtcbin  stun-server=stun://" STUN_SERVER " "
+                                  "v4l2src device=/dev/video0 "
+                                  "! videorate "
+                                  "! video/x-raw,width=640,height=360,framerate=15/1 "
+                                  "! videoconvert "
+                                  "! queue max-size-buffers=1 "
+                                  "! x264enc bitrate=600 speed-preset=ultrafast tune=zerolatency key-int-max=15 "
+                                  "! video/x-h264,profile=constrained-baseline "
+                                  "! queue max-size-time=100000000 "
+                                  "! h264parse "
+                                  "! rtph264pay config-interval=-1 name=payloader "
+                                  "! application/x-rtp,media=video,encoding-name=H264,payload=" RTP_PAYLOAD_TYPE " "
+                                  "! webrtcbin. ", &error);
+    //*/
+
     if (error != NULL) {
         g_error ("Could not create WebRTC pipeline: %s\n", error->message);
         g_error_free (error);

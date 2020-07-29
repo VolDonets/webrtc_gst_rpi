@@ -3,8 +3,8 @@ project(webrtc_raspberrypi_test)
 
 set(CMAKE_CXX_STANDARD 20)
 
-#add_executable(webrtc_raspberrypi_test send_only_unidirectional.cpp)
-add_executable(webrtc_raspberrypi_test send_recv.cpp)
+add_executable(webrtc_raspberrypi_test send_only_unidirectional.cpp)
+#add_executable(webrtc_raspberrypi_test send_recv.cpp)
 
 find_package(PkgConfig)
 if (PKG_CONFIG_FOUND)
