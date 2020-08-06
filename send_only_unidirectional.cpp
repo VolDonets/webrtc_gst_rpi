@@ -182,15 +182,12 @@ create_receiver_entry (SoupWebsocketConnection * connection)
     error = NULL;
     /**/receiver_entry->pipeline =
                 gst_parse_launch ("webrtcbin name=webrtcbin  stun-server=stun://" STUN_SERVER " "
-                                  "v4l2src device=/dev/video0 "
-                                  //"! videorate "
-                                  "! video/x-raw,width=640,height=360,framerate=15/1 "
+                                  "v4l2src device=/dev/video2 "
+                                  "! video/x-raw,width=1280,height=720,framerate=30/1 "
                                   "! videoconvert "
                                   "! queue max-size-buffers=1 "
                                   "! omxh264enc "
-                                  //"! video/x-h264,profile=constrained-baseline "
                                   "! queue max-size-time=100000000 "
-                                  //"! h264parse "
                                   "! rtph264pay config-interval=10 name=payloader pt=96 "
                                   "! capssetter caps=\"application/x-rtp,profile-level-id=(string)42c01f,media=(string)video,encoding-name=(string)H264,payload=(int)96\" "
                                   "! webrtcbin. ", &error);
