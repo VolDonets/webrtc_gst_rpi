@@ -3,8 +3,18 @@ project(webrtc_raspberrypi_test)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(webrtc_raspberrypi_test send_only_unidirectional.cpp)
+#add_executable(webrtc_raspberrypi_test send_only_unidirectional.cpp)
 #add_executable(webrtc_raspberrypi_test send_recv.cpp)
+#add_executable(webrtc_raspberrypi_test send_only_uni_ocv_mod_v1.cpp)
+#add_executable(webrtc_raspberrypi_test data_probes_test_roi_copy_ocv_uni_webrtc.cpp)
+add_executable(webrtc_raspberrypi_test data_probes_test_roi_copy_ocv_uni_webrtc_gst_embedded.cpp)
+#add_executable(webrtc_raspberrypi_test
+#add_executable(webrtc_raspberrypi_test
+#add_executable(webrtc_raspberrypi_test
+
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(webrtc_raspberrypi_test ${OpenCV_LIBS})
 
 find_package(PkgConfig)
 if (PKG_CONFIG_FOUND)
