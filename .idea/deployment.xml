@@ -2,13 +2,13 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
-      <paths name="pi_ubuntu (de7feada-c8ea-4f1f-83d6-ead3d6224b53)">
+      <paths name="pi_rm_rm (6cc3dda5-46cc-476b-a5a3-f817782418bc)">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/pi/gst_webrtc" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/pi/ocv_webrtc_gst" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
-            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-pi_ubuntu" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-pi_rm_rm" />
           </excludedPaths>
         </serverdata>
       </paths>

@@ -20,6 +20,7 @@
 
 //#include <opencv2/opencv.hpp>
 #include <opencv/cv.hpp>
+#include <iostream>
 
 /*This is a video settings for the camera, it's impossible to change dynamically
  * STR_... version is used in configuring pipeline.*/
@@ -217,7 +218,6 @@ static GstPadProbeReturn cb_have_data (GstPad *pad, GstPadProbeInfo *info, gpoin
         return GST_PAD_PROBE_OK;
 
     if (gst_buffer_map (buffer, &map, GST_MAP_WRITE)) {
-        //*
         cv::Mat main_image, copy_main_image, done_main_image, done_mini_image, cropped_img;
         cv::Size frame_size(WIDTH, HEIGHT);
 
